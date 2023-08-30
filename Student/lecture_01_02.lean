@@ -459,5 +459,5 @@ def id_bool : Bool → Bool
 
 def id_string (s : String) : String := s
 
-def polymorphic_id (T : Type) : T → T
-| t, v => v
+-- def polymorphic_id (T : Type) : T → T
+-- | t, v => v
