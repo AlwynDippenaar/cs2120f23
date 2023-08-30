@@ -449,3 +449,15 @@ was communicating to his daughter? (You can have either one
 or neither but not both)?
     nand
 -/
+
+
+def id_nat : Nat → Nat
+| n => n
+
+def id_bool : Bool → Bool
+| b => b
+
+def id_string (s : String) : String := s
+
+def polymorphic_id (T : Type) : T → T
+| t, v => v
