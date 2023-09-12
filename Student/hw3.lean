@@ -104,6 +104,49 @@ from each weekday is *money* and the reward from a weekend
 day is *health*.
 -/
 
+inductive Day: Type
+| sunday
+| monday
+| tuesday
+| wednesday
+| thursday
+| friday
+| saturday
+
+inductive Kind : Type
+| work
+| play
+
+open Day
+open Kind
+
+def day2kind : Day → Kind
+| sunday => play
+| monday => work
+| tuesday => work
+| wednesday => work
+| thursday => work
+| friday => work
+| saturday => play
+
+inductive Reward : Type
+| money
+| health
+
+open Reward
+
+def kind2reward : Kind → Reward
+| work => money
+| play => health
+
+def day2reward : Day → Reward
+| d => funkom kind2reward day2kind d
+
+#reduce day2reward sunday -- health
+#reduce day2reward saturday -- health
+#reduce day2reward monday -- money
+#reduce day2reward friday -- money
+
 /-!
 ## Problem #6
 
@@ -119,7 +162,9 @@ Consider the outputs of the following #check commands.
 Is × left associative or right associative? Briefly explain
 how you reached your answer.
 
-Answer here: 
+Answer here: × is right associative because the first two cases have the same type,
+but the third case retains the parentheses in its type, so they are necessary when
+changing to left association.
 
 ### B.
 Define a function, *triple*, of the following type:
@@ -127,6 +172,8 @@ Define a function, *triple*, of the following type:
 -/
 
 -- Here:
+def triple {α β γ : Type} : α → β → γ → (α × β × γ)
+| a, b, g => (a, b, g)
 
 /-!
 ### C.
@@ -137,6 +184,14 @@ second, or third elements.
 -/
 
 -- Here:
+def first {α β γ : Type} : (α × β × γ) → α
+| (a, _, _) => a
+
+def second {α β γ : Type} : (α × β × γ) → β
+| (_, b, _) => b
+
+def third {α β γ : Type} : (α × β × γ) → γ
+| (_, _, g) => g
 
 /-!
 ### D.
@@ -147,6 +202,9 @@ element of that triple.
 -/
 
 -- Here:
+#eval first ("Yes","No","Maybe")
+#eval second ("Yes","No","Maybe")
+#eval third ("Yes","No","Maybe")
 
 /-!
 ### E.
@@ -154,3 +212,5 @@ Use #check to check the type of a term. that you make
 up, of type (Nat × String) × Bool. The challenge here
 is to write a term of that type. 
 -/
+
+#check ((1, "Hello"), true)
