@@ -104,7 +104,7 @@ a function, *prod_assoc_reverse* accordingly.
 
 -- Here:
 
-def prod_assoc_reverse {α β γ : Type} :  (α × β) × γ → α × (β × γ)
+def prod_assoc_reverse {α β γ : Type} : (α × β) × γ → α × (β × γ)
 | ((α, β), γ) => (α, (β, γ))
 
 /-!
