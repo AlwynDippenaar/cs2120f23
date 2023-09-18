@@ -146,7 +146,7 @@ fun s =>
 #check sum_comm
 
 /-!
-Can you always convert a term of type *β ⊗ α* into 
+Can you always convert a term of type *β ⊕ α* into 
 one of type *α ⊕ β*? Prove it by writing a function 
 that does it. Call is sum_comm_reverse.
 -/
@@ -161,7 +161,7 @@ fun s =>
 
 
 /-!
-## #5: Is Sum Associative? 
+## #5: Is Sum Associative?
 
 If you have bread or (cheese or jam), can you always
 have (bread or cheese) or jam? In other words, are sum
@@ -185,7 +185,7 @@ which starts with a Sum.inr. You will need to use
 in both matching and to define return result values. 
 -/
 
-def sum_assoc { α β γ : Type} : α ⊕ (β ⊕ γ) → (α ⊕ β) ⊕ γ
+def sum_assoc {α β γ : Type} : α ⊕ (β ⊕ γ) → (α ⊕ β) ⊕ γ
 | (Sum.inl a) => (Sum.inl (Sum.inl a))
 | (Sum.inr (Sum.inl b)) => (Sum.inl (Sum.inr b))
 | (Sum.inr (Sum.inr c)) => (Sum.inr c)
@@ -261,7 +261,7 @@ type *wet*.
 
 -- Here
 
-def its_wet : rain ⊕ sprinkler → (rain → wet) → (sprinkler → wet) → wet
+def its_wet {rain sprinkler wet : Type} : rain ⊕ sprinkler → (rain → wet) → (sprinkler → wet) → wet
 | (Sum.inl r), f1, _ => f1 r
 | (Sum.inr s), _, f2 => f2 s
 
