@@ -154,7 +154,9 @@ matching.
 -/
 
 -- Here
-
+def pred : Nat → Nat
+| 0 => 0
+| (Nat.succ n') => n'
 
 
 -- Test cases
@@ -172,6 +174,15 @@ returns the same doll as *d3*.
 
 -- Answer here
 
+inductive Doll : Type
+| solid
+| shell (d : Doll)
+
+open Doll
+
+def mk_doll : Nat → Doll
+| 0 => solid
+| (n' + 1) => shell (mk_doll n')
 
 
 -- test cases
@@ -191,7 +202,7 @@ def nat_eq : Nat → Nat → Bool
 | 0, 0 => true
 | 0, n' + 1 => false
 | n' + 1, 0 => false
-| (n' + 1), (m' + 1) => _
+| (n' + 1), (m' + 1) => nat_eq n' m'
 
 -- a few tests
 #eval nat_eq 0 0
@@ -216,6 +227,18 @@ result *in each case*.
 
 -- Here
 
+def nat_le : Nat → Nat → Bool
+| 0, 0 => true
+| 0, n' + 1 => true
+| n' + 1, 0 => false
+| (n' + 1), (m' + 1) => nat_le n' m'
+
+#eval nat_le 1 1
+#eval nat_le 0 1
+#eval nat_le 1 0
+#eval nat_le 2 3
+#eval nat_le 2 10
+
 /-!
 ###  #5. Nat Number Addition 
 
@@ -225,7 +248,7 @@ a natural number addition function.
 
 def add : Nat → Nat → Nat
 | m, 0 => m
-| m, (Nat.succ n') => _   -- hint: recursion
+| m, (Nat.succ n') => add (Nat.succ m) n'   -- hint: recursion
 
 
 -- Some test cases
@@ -250,7 +273,14 @@ test cases to show that it appears to be working.
 
 def mul : Nat → Nat → Nat
 | m, 0 => 0
-| m, (Nat.succ n') => add (_) (_)
+| m, (Nat.succ n') => add (m) (mul m n')
+
+#reduce mul 0 0   -- expect 0
+#reduce mul 5 0   -- expect 0
+#reduce mul 0 5   -- expect 0
+#reduce mul 5 4   -- expect 20
+#reduce mul 4 5   -- expect 20
+#reduce mul 5 5   -- expect 25
 
 /-!
 ### Sum Binary Nat Function Over Range 0 to n 
@@ -268,6 +298,15 @@ to and including n.
 -/
 
 def sum_f : (Nat → Nat) → Nat → Nat 
-| f, 0 => _
-| f, n' + 1 => _
+| f, 0 => f 0
+| f, n' + 1 => add (f (n'+1)) (sum_f f n') 
+
+def squar : Nat → Nat
+| n => n*n
+
+#reduce sum_f Nat.succ 3   -- expect 10
+#reduce sum_f Nat.nextPowerOfTwo 5   -- expect 20
+#reduce sum_f squar 6   -- expect 91
+#reduce sum_f squar 3   -- expect 14
+#reduce sum_f Nat.succ 8   -- expect 45
 
