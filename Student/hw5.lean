@@ -91,7 +91,7 @@ names, *jam* and *cheese*.
 {α β : Type} → (α → Empty ⊕ β → Empty) → (α × β → Empty).
 -/
 
-def demorgan1  {α β : Type} : ((no α) ⊕ (no β)) → (no (α × β))  
+def demorgan1  {α β : Type} : ((no α) ⊕ (no β)) → (no (α × β))
 | (Sum.inl noa) => (fun (a, _) => noa a)
 | (Sum.inr nob) => (fun (_, b) => nob b)
 
