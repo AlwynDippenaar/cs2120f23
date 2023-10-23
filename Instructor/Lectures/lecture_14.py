@@ -3,6 +3,13 @@ from z3 import *
 # Propositional Logic (Boolean) Variables
 # Python name, variable type, string name
 
+# x implies y implies not x implies not y
+# counterexample true implies true implies false implies false
+# false false - true?
+# true false  - false?
+# false true  - false?
+# true true   - false?
+
 X = Bool('X')
 Y = Bool('Y')
 Z = Bool('Y')
