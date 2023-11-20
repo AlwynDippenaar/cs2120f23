@@ -15,5 +15,5 @@ variable
 
 #check ∀ (c d : Cat), Likes3 c d
 
-example : (∀ (c1 c2 : Cat), Likes3 c1 c2) → (c : Cat) → (d : Cat) → (Likes3 c d)
+example : (∀ (c1 c2 : Cat), Likes3 c1 c2) → (c : Cat) → (d : Cat) → Likes3 c d
 | a, w1, w2 => a w1 w2
