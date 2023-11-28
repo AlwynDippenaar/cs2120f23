@@ -7,7 +7,17 @@ variable
 
 #check ∀ (d : Dog), ∃ (c : Cat) , Likes1 d c
 
+
+variable
+  (x y z : Dog)
+  (pf1 : Likes2 x y)
+  (pf2 : Likes2 y z)
+  (pf : ∀ (d g w : Dog), Likes2 d g → Likes2 g w → Likes2 d w)
+
+example : Likes2 x z := pf x y z pf1 pf2
+
 #check ∀ (d g w: Dog), ((Likes2 d g) ∧ (Likes2 g w)) → (Likes2 d w)
+
 
 #check ∀ (c d : Cat), (Likes3 c d) → (Likes3 d c)
 
