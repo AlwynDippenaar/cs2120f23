@@ -117,10 +117,15 @@ formal proof of it, and briefly explain in English how you
 proved it.
 -/
 
-example : ∃ n, square n 4 := Exists.intro 2 (_) -- fill in _
+example : ∃ n, square n 4 := Exists.intro 2 (sqr 2 4 rfl) -- fill in _
 
 /-
 English language translation of propostion here:
+
+There exists a natural number n, where the square of n is 4.
+
+I prove this by giving the proposition that 4 = 2^2, and then
+using rfl to generate the reflexive proof of that statement.
 -/
 
 /-!
@@ -204,7 +209,7 @@ on the name so as not to clash with Lean's definition.
 -/
 
 inductive Eq' : α → α → Prop where
-  | refl (a : α) : Eq' a a
+| refl (a : α) : Eq' a a
 
 /-!
 Let's dissect this definition. We'll use Lean's definition
@@ -451,9 +456,10 @@ write separate tactic applications indented on separate lines.
 -/
 
 theorem eq_rel_trans {α : Type} {a b c : α} :
-_               -- fill with proposition: equality is transitive
-| _, _ => by
-  _             -- fill in your proof of it here
+a = b → b = c → a = c         -- fill with proposition: equality is transitive
+| h1, h2 => by
+  rw [h1]             -- fill in your proof of it here
+  rw [h2]
 
 /-!
 ## Exam Question #3
@@ -468,3 +474,11 @@ is not.
 -/
 
 -- Your answer here
+
+inductive successor_pair : Nat → Nat → Prop
+| successive (a sa : Nat) : sa = Nat.succ a → successor_pair a sa
+
+open successor_pair
+
+example : successor_pair 2 3 := successive 2 3 rfl
+example : ¬successor_pair 2 4 := λ h => nomatch h
